@@ -80,8 +80,28 @@ public class Village {
 	
 	public Etal rechercherEtal (Gaulois vendeur) {
 		for (int i=0;i<marche.etals.length;i++) {
-			if
+			if (marche.etals[i].getVendeur().equals(vendeur)) {
+				return marche.etals[i];
+			}
 		}
+		return null;
+	}
+	
+	public String partirVendeur (Gaulois vendeur) {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Le vendeur "+vendeur+" quitte son etal,");
+		Etal etalDuVendeur = rechercherEtal (vendeur);
+		int quantiteDebutMarche = etalDuVendeur.getQuantiteDebutMarche();
+		chaine.append(" il a vendu "+(quantiteDebutMarche-etalDuVendeur.getQuantite())+" "+
+					etalDuVendeur.getProduit()+" parmi les "+quantiteDebutMarche+" qu'il voulait vendre.\n");
+		return "a";
+	}
+	
+	public String afficherMarche() {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Le marché du village "+nom+" possède plusieurs étals :\r\n");
+		chaine.append(marche.afficherMarche());
+		return chaine.toString();
 	}
 
 //     PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
@@ -144,15 +164,17 @@ public class Village {
 		}
 
 		public String afficherMarche() {
+			StringBuilder chaine = new StringBuilder();
 			int nbEtalVide = 0;
 			for (int i = 0; i < nbEtals; i++) {
 				if (etals[i].isEtalOccupe()) {
-					etals[i].afficherEtal();
+					chaine.append(etals[i].afficherEtal()+"\n");
 				} else {
 					nbEtalVide++;
 				}
 			}
-			return ("Il reste " + nbEtalVide + " etals non utilises dans le marche. \n");
+			chaine.append("Il reste " + nbEtalVide + " etals non utilises dans le marche. \n");
+			return chaine.toString();
 		}
 	}
 
