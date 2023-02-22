@@ -57,18 +57,25 @@ public class Village {
 		return chaine.toString();
 	}
 
-	public void quiChercheTrouveStand(Gaulois villageois, String produit, int quantite) {
+	public String installerVendeur(Gaulois villageois, String produit, int nbProduit) {
 		StringBuilder chaine = new StringBuilder();
-		if (nbVillageois < 1) {
-			chaine.append(villageois.getNom() + "cherche un endroit pour vendre " + quantite + " " + produit + ".\n");
-		} else {
-			chaine.append("Au village du chef " + chef.getNom() + " vivent les légendaires gaulois :\n");
-			for (int i = 0; i < nbVillageois; i++) {
-				chaine.append("- " + villageois[i].getNom() + "\n");
-			}
+		chaine.append(villageois.getNom() + "cherche un endroit pour vendre " + nbProduit + " " + produit + ".\n");
+		int numeroEtal = marche.trouverEtalLibre();
+		if (numeroEtal!=-1) {
+			marche.utiliserEtal(numeroEtal, villageois, produit, nbProduit);
+			chaine.append("Le vendeur "+villageois.getNom()+" vend des "+produit+" à l'étal n°"+ numeroEtal+".\n");
 		}
 		return chaine.toString();
-
+	}
+	
+	public String rechercherVendeursProduit (String produit) {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Les vendeurs qui proposent des "+produit+" sont :");
+		Etal[] vendeursProduit = marche.trouverEtals(produit); 
+		for (int i=0; i<vendeursProduit.length;i++) {
+			chaine.append("- "+vendeursProduit[i].getVendeur()+"\n");
+		}
+		return chaine.toString();
 	}
 
 //     PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
@@ -95,7 +102,7 @@ public class Village {
 			etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
 		}
 
-		int trouverEtalLibre() {
+		public int trouverEtalLibre() {
 			for (int i = 0; i < nbEtals; i++)
 				if (!etals[i].isEtalOccupe()) {
 					return i;
@@ -110,15 +117,15 @@ public class Village {
 					etalsTrouves++;
 				}
 			}
-			Etal[] EtalsVendantPrd = new Etal[etalsTrouves];
+			Etal[] etalsVendantPrd = new Etal[etalsTrouves];
 			int indiceEtal = 0;
 			for (int i = 0; i < nbEtals; i++) {
 				if (etals[i].contientProduit(produit)) {
-					EtalsVendantPrd[indiceEtal] = etals[i];
+					etalsVendantPrd[indiceEtal] = etals[i];
 					indiceEtal++;
 				}
 			}
-			return EtalsVendantPrd;
+			return etalsVendantPrd;
 		}
 
 		private Etal trouverVendeur(Gaulois gaulois) {
