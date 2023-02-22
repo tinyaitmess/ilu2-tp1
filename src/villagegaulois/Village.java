@@ -77,6 +77,12 @@ public class Village {
 		}
 		return chaine.toString();
 	}
+	
+	public Etal rechercherEtal (Gaulois vendeur) {
+		for (int i=0;i<marche.etals.length;i++) {
+			if
+		}
+	}
 
 //     PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
 //  PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
