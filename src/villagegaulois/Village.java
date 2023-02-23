@@ -9,11 +9,13 @@ public class Village {
 	private Gaulois[] villageois;
 	private int nbVillageois = 0;
 	Marche marche;
+	private int nbEtals;
 
-	public Village(String nom, int nbVillageoisMaximum, Marche marche) {
+	public Village(String nom, int nbVillageoisMaximum,int nbEtals) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
-		this.marche = marche;
+		this.nbEtals=nbEtals;
+		this.marche = new Marche(nbEtals);
 	}
 
 	public String getNom() {
@@ -112,12 +114,11 @@ public class Village {
 //  PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
 
 	public class Marche {
-		private int nbEtals;
+		
 		private Etal[] etals;
 
 		Marche(int nbEtals) {
 			super();
-			this.nbEtals = nbEtals;
 			this.etals = new Etal[nbEtals];
 			for (int i = 0; i < nbEtals; i++) {
 				this.etals[i] = new Etal();
