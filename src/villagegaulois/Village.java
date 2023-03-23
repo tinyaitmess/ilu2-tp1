@@ -1,5 +1,6 @@
 package villagegaulois;
 
+import Exceptions.VillageSansChefException;
 import personnages.Chef;
 import personnages.Gaulois;
 
@@ -46,8 +47,11 @@ public class Village {
 		return null;
 	}
 
-	public String afficherVillageois() {
+	public String afficherVillageois() throws VillageSansChefException {
 		StringBuilder chaine = new StringBuilder();
+		if (chef==null) {
+			throw new VillageSansChefException();
+		}
 		if (nbVillageois < 1) {
 			chaine.append("Il n'y a encore aucun habitant au village du chef " + chef.getNom() + ".\n");
 		} else {
@@ -105,6 +109,8 @@ public class Village {
 		chaine.append(marche.afficherMarche());
 		return chaine.toString();
 	}
+	
+	
 
 //     PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
 //  PARTIE MARCHE ---------------------------------------- PARTIE MARCHE
